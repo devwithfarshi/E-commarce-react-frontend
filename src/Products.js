@@ -1,8 +1,47 @@
 import React from "react";
+import Loading from "react-loading-components";
 import styled from "styled-components";
-
+import FilterSection from "./components/FilterSection";
+import ProductList from "./components/ProductList";
+import Sort from "./components/Sort";
+import { useFilterContext } from "./context/filter_context";
 const Products = () => {
-  return <Wrapper></Wrapper>;
+  const { filter_products, isLoading } = useFilterContext();
+  return (
+    <Wrapper>
+      <div className="container grid grid-filter-column">
+        <div>
+          <FilterSection />
+        </div>
+        <section className="product-view--sort">
+          <div className="sort-filter">
+            <Sort />
+          </div>
+          <div className="main-product">
+            {isLoading ? (
+              <div
+                style={{
+                  height: "50vh",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Loading
+                  type="ball_triangle"
+                  width={100}
+                  height={100}
+                  fill="#8490ff"
+                />
+              </div>
+            ) : (
+              <ProductList />
+            )}
+          </div>
+        </section>
+      </div>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.section`
